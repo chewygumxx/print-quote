@@ -1,0 +1,57 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id":     "https://chewygumxx.me/ref/schema/quotes.schema.json",
+
+	"title": "Quote Database",
+	"description": "An array of quote objects that each include stylised segments and attribution.", 
+
+	"type": "array",
+	"items": {
+		"type": "object",
+
+        "required" : [ "quote", "attribution" ],
+        "additionalProperties": false,
+		"properties": {
+			"quote": {
+				"type": "array",
+                "description": "Quote text segmented into HTML/CSS-style span classes for stylisation.",
+
+				"items": {
+					"type": "object",
+                    "description": "Quote text segment",
+
+                    "required": [ "style", "newline", "content" ],
+                    "additionalProperties": false,
+					"properties": {
+						"style": {
+                            "type": "string",
+                            "description": "Formatted style class.",
+                            "enum": [ "standard", "context", "emphasis" ]
+                        },
+
+						"newline": {
+                            "type": "boolean",
+                            "description": "Whether a newline should follow."
+                        },
+
+						"content": {
+                            "type": "string",
+                            "description": "Character string to be printed."
+                        }
+					}
+				}
+			},
+
+			"attribution": {
+				"type": "object",
+
+                "required": [ "entity", "source" ],
+                "additionalProperties": false,
+				"properties": {
+					"entity": { "type": "string" },
+					"source": { "type": "string" }
+				}
+			}
+		}
+	}
+}
