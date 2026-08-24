@@ -1,10 +1,11 @@
-// vim: expandtab:shiftwidth=4
+// vim:set expandtab shiftwidth=4 filetype=rust:
 
-//
-//
-// ~/dev/print-quote/src/main.rs
-//
-//
+// 
+// 
+// ~chewygumxx/print-quote.git
+// ::: :/src/main.rs
+// 
+// 
 
 //
 // Parses a quotes.json file, formats context, prints accordingly
