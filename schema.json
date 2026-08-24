@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id":     "https://raw.githubusercontent.com/chewygumxx/print-quote/refs/tags/v1.1.0/schema.json",
+    "$id":     "https://raw.githubusercontent.com/chewygumxx/print-quote/refs/tags/v1.1.1/schema.json",
 
     "title": "Quote Database",
     "description": "An array of quote objects that each include stylised segments and attribution.", 
