@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id":     "https://raw.githubusercontent.com/chewygumxx/print-quote/refs/tags/v1.1.1/schema.json",
+    "$id":     "https://raw.githubusercontent.com/chewygumxx/print-quote/refs/tags/v1.1.2/schema.json",
 
     "title": "Quote Database",
     "description": "An array of quote objects that each include stylised segments and attribution.", 
@@ -57,11 +57,49 @@
                         "examples": [ 
                             "Meditations (2nd Century AD)",
                             "The Art of War (5th Century BC)",
-                            "Spongebob Squarepants - Season 1 Episode 14: \"SB-129\""
+                            "Spongebob Squarepants - S01E14: SB-129"
                         ]
                     }
                 }
             }
-        }
+        },
+        "examples": [
+            { 
+                "quote": [
+                    {
+                        "style": "standard", 
+                        "newline": true,
+                        "content": "No wants? No needs? We weren't meant for that, none of us. Man stagnates if he has no ambition, nor desire to be more than he is."
+                    },
+                    {
+                        "style": "context",
+                        "newline": true,
+                        "content": "We have more than we need"
+                    },
+                    {
+                        "style": "emphasis",
+                        "newline": false,
+                        "content": "Except a challenge"
+                    }
+                ],
+                "attribution": {
+                    "entity": "Captain James Tiberius Kirk",
+                    "source": "Star Trek - S01E24: This Side of Paradise"
+                }
+            },
+            {
+                "quote": [
+                    {
+                        "style": "standard",
+                        "newline": false,
+                        "content": "It came to Case that these were the stars under which he voyaged, his destiny spelled out in a constellation of cheap chrome."
+                    }
+                ],
+                "attribution": {
+                    "entity": "William Gibson",
+                    "source": "Neuromancer (1984)"
+                }
+            }
+        ]
     }
 }
