@@ -90,6 +90,11 @@ fn get_quotes_path() -> Option<PathBuf> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+    if matches!(env::args().nth(1).as_deref(), Some("--version") | Some("-V")) {
+        println!("print-quote {}", env!("CARGO_PKG_VERSION"));
+        return Ok(());
+    }
+
     // Deserialise quotes
     let path = get_quotes_path().ok_or_else(|| std::io::Error::new(
         std::io::ErrorKind::NotFound,
