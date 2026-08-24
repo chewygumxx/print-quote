@@ -1,0 +1,74 @@
+# Builds print-quote and attaches the resulting binaries to a GitHub
+# Release whenever a SemVer tag (https://semver.org) is pushed, e.g.
+#
+#     git tag v1.0.0
+#     git push origin v1.0.0
+
+name: Release
+
+on:
+    push:
+        tags:
+            - "v*.*.*"
+
+permissions:
+    contents: write
+
+jobs:
+    build:
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - target: x86_64-unknown-linux-gnu
+                      os: ubuntu-latest
+                    - target: x86_64-unknown-linux-musl
+                      os: ubuntu-latest
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v7
+
+            - uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: ${{ matrix.target }}
+
+            - name: Install musl-gcc
+              if: contains(matrix.target, 'musl')
+              run: sudo apt-get update && sudo apt-get install -y musl-tools
+
+            - name: Build
+              run: cargo build --release --target ${{ matrix.target }}
+
+            - name: Package
+              env:
+                  ASSET: print-quote-${{ github.ref_name }}-${{ matrix.target }}
+              run: |
+                  install -Dm755 \
+                      target/${{ matrix.target }}/release/print-quote \
+                      dist/print-quote
+                  tar -czf "$ASSET.tar.gz" -C dist print-quote
+
+            - uses: actions/upload-artifact@v7
+              with:
+                  name: print-quote-${{ matrix.target }}
+                  path: print-quote-*.tar.gz
+                  if-no-files-found: error
+
+    release:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v7
+              with:
+                  path: artifacts
+                  merge-multiple: true
+
+            - name: Checksums
+              working-directory: artifacts
+              run: sha256sum *.tar.gz > SHA256SUMS
+
+            - uses: softprops/action-gh-release@v3
+              with:
+                  files: |
+                      artifacts/*.tar.gz
+                      artifacts/SHA256SUMS
