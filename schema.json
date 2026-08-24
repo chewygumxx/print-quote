@@ -1,0 +1,67 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id":     "https://raw.githubusercontent.com/chewygumxx/print-quote/refs/tags/v1.1.0/schema.json",
+
+    "title": "Quote Database",
+    "description": "An array of quote objects that each include stylised segments and attribution.", 
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required" : [ "quote", "attribution" ],
+        "additionalProperties": false,
+        "properties": {
+            "quote": {
+                "type": "array",
+                "description": "Quote text segmented into HTML/CSS-style span classes for stylisation.",
+                "items": {
+                    "type": "object",
+                    "description": "Quote text segment",
+                    "required": [ "style", "newline", "content" ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "style": {
+                            "type": "string",
+                            "description": "Formatted style class.",
+                            "enum": [ "standard", "context", "emphasis" ]
+                        },
+                        "newline": {
+                            "type": "boolean",
+                            "description": "Append trailing newline."
+                        },
+                        "content": {
+                            "type": "string",
+                            "description": "Character string to be printed.",
+                            "examples": [
+                                "The happiness of your life depends upon the quality of your thoughts.",
+                                "Supreme excellence consists of breaking the enemy's resistance without fighting.",
+                                "FUUUUUUTURE"
+                            ]
+                        }
+                    }
+                }
+            },
+            "attribution": {
+                "type": "object",
+                "description": "Metadata related to the identity and context per which the quote is most associated.",
+                "required": [ "entity", "source" ],
+                "additionalProperties": false,
+                "properties": {
+                    "entity": {
+                        "type": "string",
+                        "description": "Name of the entity the quote is most associated",
+                        "examples": [ "Marcus Aurelius", "Sun Tzu", "Squidward Tentacles" ]
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "The source, date and/or relevant context in which the quote is most associated",
+                        "examples": [ 
+                            "Meditations (2nd Century AD)",
+                            "The Art of War (5th Century BC)",
+                            "Spongebob Squarepants - Season 1 Episode 14: \"SB-129\""
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
